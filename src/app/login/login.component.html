@@ -1,0 +1,34 @@
+<div class="login">
+
+    <div class="row col-md-12">
+        <div class="col-md-5 offset-md-3 mt-5">
+            <form class="jumbotron mt-5" [formGroup]="loginform" (ngSubmit)="confirmcredentials()">
+                <h1 class="text-center text-primary">Login</h1>
+                <div class="form-group">
+                    <mat-form-field class="full-width-input">
+                        <input class="email" matInput placeholder="Email" class="email" formControlName="username">
+                        <mat-error *ngIf="username.errors?.required&&username.touched">
+                            Please Provide a Email
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="form-group">
+
+                    <mat-form-field class="full-width-input">
+                        <input matInput type="password" class="password" placeholder="Password" formControlName="password">
+                        <mat-error *ngIf="password.errors?.required&&password.touched">
+                            Please provide a password
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+
+
+                <div class="form-group text-center">
+                    <button class="btn btn-primary btn-lg">Login</button>
+                </div>
+                <mat-error *ngIf="errormessage">Invalid Credentials</mat-error>
+            </form>
+        </div>
+    </div>
+</div>

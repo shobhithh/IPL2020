@@ -1,0 +1,18 @@
+.navbar-collapse .nav-link {
+    font-size: 1 rem;
+    transition: all 0.2s ease-in-out;
+    color: #d6d6d6;
+}
+
+.navbar-collapse .nav-link:hover {
+    color: #ee1515;
+}
+
+.nav-link {
+    font-family: "Rajdhani", sans-serif;
+}
+
+.navbar-collapse .nav-link:active {
+    color: yellow;
+    text-decoration: underline
+}
