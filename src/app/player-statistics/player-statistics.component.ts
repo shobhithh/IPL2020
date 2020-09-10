@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IplplayerdetailsService } from '../service/iplplayerdetails.service';
-import { amountByRolename, PlayerDTO } from '../shared/labels.model';
+import { AmountByRolename, PlayerDTO } from '../shared/labels.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -13,19 +13,19 @@ import { GoogleChartInterface } from 'ng2-google-charts';
 })
 export class PlayerStatisticsComponent implements OnInit {
 
-  teamlabel = []
-  show_pie_chart: boolean = true
-  show_table_chart: boolean = true
-  showTable: boolean = true
+  teamlabel = [];
+  showpiechart = true;
+  showtablechart = true;
   screenwidth: any;
-  selectedteam: string
-  teamMemberDetails: PlayerDTO[] = []
-  chartdata = []
-  showTableData: boolean = false
-  style: object = {};
-  teamMembersColumns = ["name", "role", "label", "price"]
+  selectedteam: string;
+  teamMemberDetails: PlayerDTO[] = [];
+  chartdata = [];
+  showTableData = false;
+
+  teamMembersColumns = ['name', 'role', 'label', 'price'];
   lowValue = 0;
   highValue = 5;
+
   pieChart: GoogleChartInterface;
   tableChart: GoogleChartInterface;
   datasource = new MatTableDataSource<PlayerDTO>();
@@ -35,87 +35,83 @@ export class PlayerStatisticsComponent implements OnInit {
   constructor(private iplservice: IplplayerdetailsService) { }
 
   ngOnInit(): void {
-    this.showTableData = false
+    this.showTableData = false;
     this.iplservice.getLabels().subscribe(data => {
-      this.teamlabel = data['labels']
-    })
+      this.teamlabel = data['labels'];
+    });
   }
 
   TeamDetails() {
+    this.showtablechart = false;
     this.iplservice.getPlayerDetails(this.selectedteam).subscribe(result => {
-      this.showTableData=true
+      this.showTableData = true;
       this.teamMemberDetails = result as PlayerDTO[];
-      setTimeout(() => {    
+      setTimeout(() => {
         this.datasource = new MatTableDataSource(this.teamMemberDetails);
         this.datasource.paginator = this.paginator;
         this.datasource.sort = this.sort;
-        console.log(this.datasource);
+        
       }, 500);
-    })
-    this.show_pie_chart = false;
+    });
+    this.showpiechart = false;
     this.iplservice.getAmountByRole(this.selectedteam).subscribe(result => {
 
-      this.chartdata = result as amountByRolename[]
-      let data = [];
-      data.push(["Role", "Count"]);
-      for (let s of this.chartdata) {
-        data.push([s["roleName"], s["amount"]]);
+      this.chartdata = result as AmountByRolename[];
+      const data = [];
+      data.push(['Role', 'Count']);
+      for (const s of this.chartdata) {
+        data.push([s['roleName'], s['amount']]);
       }
-      this.show_pie_chart = true;
+      console.log(this.screenwidth);
+      this.showpiechart = true;
       this.pieChart = {
-        chartType: "PieChart",
+        chartType: 'PieChart',
         dataTable: data,
         options: {
-          'Role': 'Count',
-          width: 500,
-          height: 400
+          is3D: true,
+          // 'Role': 'Count',
+          width: this.onScreenResize(event),
+          height: 350
         }
-      }
-    })
+      };
+    });
   }
 
 
 
   selectChart(event) {
-    let role = event.selectedRowFormattedValues[0];
-    this.show_table_chart=false
-    console.log(event)
+    const role = event.selectedRowFormattedValues[0];
+    this.showtablechart = false;
+    console.log(event);
     this.iplservice.getPlayerByTeamAndRole(this.selectedteam, role).subscribe(result => {
-      console.log(result)
-      let playerdetails = result
-      let data = [];
-      data.push(["Players", "Team", "Role", "Price"]);
-      for (let p of playerdetails) {
-        data.push([p["name"], p["label"], p["role"], p["price"]]);
-      }
-      this.show_table_chart=true
-      this.tableChart = {
-        chartType: "Table",
-        dataTable: data,
-        options: { allowHtml: true },
-      
-      }
 
-    })
+      const playerdetails = result;
+      const data = [];
+      data.push(['Players', 'Team', 'Role', 'Price']);
+      for (const p of playerdetails) {
+        data.push([p['name'], p['label'], p['role'], p['price']]);
+      }
+      this.showtablechart = true;
+      this.tableChart = {
+        chartType: 'Table',
+        dataTable: data,
+        options: { allowHtml: true, is3D: true }
+      };
+
+    });
   }
 
 
   onScreenResize(event) {
-    console.log(event)
+
     this.screenwidth = event.target.innerWidth;
-    console.log(this.screenwidth)
-    console.log(event.target.innerHeight)
-    this.style = {
-      position: 'fixed',
-      width: `${this.screenwidth}px`,
-      height: `${event.target.innerHeight}px`
-    };
+    return this.screenwidth;
 
   }
 
   public getPaginatorData(event: PageEvent): PageEvent {
 
-    console.log("pagination event",event)
+    console.log('pagination event', event);
     this.lowValue = event.pageIndex * event.pageSize;
     this.highValue = this.lowValue + event.pageSize;
     return event;

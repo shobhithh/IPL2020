@@ -6,13 +6,14 @@
 
 .navbar-collapse .nav-link:hover {
     color: #ee1515;
+    border-bottom: 3px solid red
 }
 
 .nav-link {
     font-family: "Rajdhani", sans-serif;
 }
 
-.navbar-collapse .nav-link:active {
-    color: yellow;
-    text-decoration: underline
+.navbar-collapse .nav-link.active {
+    /* color: yellow; */
+    border-bottom: 3px solid red
 }

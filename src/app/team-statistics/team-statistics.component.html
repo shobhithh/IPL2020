@@ -1,18 +1,92 @@
 <app-header>
 </app-header>
-<div class="container">
+<div class="container" (window:resize)="resizeScreen($event)">
     <div class="row mt-5">
-        <div class="col-md-6 col-12 col-lg-6">
-            <div *ngIf="tableChart" class="table">
-                <google-chart [data]="tableChart"></google-chart>
+
+        <div class="col-md-6 d-none d-md-block d-lg-block d-sm-none">
+            <div class=" row col-md-12">
+                <h3 class="text-primary mb-0">Team Details</h3>
+            </div>
+            <table mat-table [dataSource]="datasource" matSort class="mat-elevation-z8">
+                <ng-container matColumnDef="label">
+                    <th mat-header-cell *matHeaderCellDef>Label</th>
+                    <td mat-cell *matCellDef="let data;">{{data.label}}</td>
+                </ng-container>
+                <ng-container matColumnDef="coach">
+                    <th mat-header-cell *matHeaderCellDef>Coach</th>
+                    <td mat-cell *matCellDef="let data;">{{data.coach}}</td>
+                </ng-container>
+                <ng-container matColumnDef="city">
+                    <th mat-header-cell *matHeaderCellDef>City</th>
+                    <td mat-cell *matCellDef="let data;">{{data.city}}</td>
+                </ng-container>
+                <ng-container matColumnDef="home">
+                    <th mat-header-cell *matHeaderCellDef>Home</th>
+                    <td mat-cell *matCellDef="let data;">{{data.home}}</td>
+                </ng-container>
+                <ng-container matColumnDef="team">
+                    <th mat-header-cell *matHeaderCellDef>Team</th>
+                    <td mat-cell *matCellDef="let data;">{{data.team}}</td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="teamDetails "></tr>
+                <tr mat-row *matRowDef="let row; columns: teamDetails;"></tr>
+
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[5,10,15,25]" showFirstLastButtons class="col-md-12"></mat-paginator>
+        </div>
+
+        <div class="d-md-none d-lg-none d-block d-sm-block mt-2 mb-3">
+            <div class="col-12">
+                <div class="row col-12">
+                    <h3 class=" text-primary mb-0">Player Details</h3>
+                </div>
+                <mat-accordion displayMode="flat" multi mat-table>
+                    <section matSort class="mat-elevation-z2 mat-header-row table-header">
+                        <div class="row col-12">
+                            <div class="col-3 pl-4 "><b>Label</b></div>
+                            <div class="col-4 pl-4"><b>Coach</b></div>
+                            <div class="col-5"><b>City</b></div>
+                        </div>
+                    </section>
+                    <mat-expansion-panel *ngFor="let item of datasource['filteredData']| slice: lowValue : highValue;">
+                        <mat-expansion-panel-header class="col-12 table-data h-100 my-1 ">
+                            <div class="row col-12">
+                                <div class="col-3 px-0">{{item.label}}</div>
+                                <div class="col-4"> {{ item.coach }}</div>
+                                <div class="col-5 pl-4 px-0">{{ item.city}}</div>
+                            </div>
+                        </mat-expansion-panel-header>
+                        <div class="expand-data row my-1 ">
+                            <div class="col-6"><b>Home</b></div>
+                            <div class="col-6 "> <b>:</b>&nbsp; {{item.home}} </div>
+                            <div class="col-6"><b>Team</b></div>
+                            <div class="col-6 "> <b>:</b>&nbsp; {{item.team}} </div>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+                <mat-paginator [length]="datasource['filteredData'].length" [pageSizeOptions]="[5, 10, 20]" pageSize=5 (page)="getPaginatorData($event)" showFirstLastButtons="false">
+                </mat-paginator>
             </div>
         </div>
+
+
+
         <div class="col-md-6 col-12 col-lg-6">
+            <div class=" row col-md-12">
+                <h3 class="text-primary mb-0">Total Amount of Individual Team</h3>
+            </div>
             <div *ngIf="columnChart" class="columnchart">
                 <google-chart [data]="columnChart" (chartSelect)="onSelectChart($event)"></google-chart>
             </div>
-            <div *ngIf="pieChart&&show_table_chart" class="piechart mt-3">
-                <google-chart [data]="pieChart"></google-chart>
+            <div *ngIf="pieChart&&showTableChart">
+                <div class=" row col-md-12 mt-3">
+                    <h3 class="text-primary mb-0">Players Count Based on Role & Team </h3>
+                </div>
+                <div class="piechart ">
+                    <google-chart [data]="pieChart"></google-chart>
+                </div>
             </div>
         </div>
     </div>

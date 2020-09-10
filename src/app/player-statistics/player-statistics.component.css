@@ -10,3 +10,7 @@ button {
 .playerstat {
     background-color: #d6d6d6;
 }
+
+::ng-deep .mat-select-value-text {
+    color: blue;
+}

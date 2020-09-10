@@ -1,5 +1,5 @@
-export interface JwtRequest{
-    password:string;
-    username:string;
-    
+export interface JwtRequest {
+    password: string;
+    username: string;
+
 }

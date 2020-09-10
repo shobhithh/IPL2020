@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  baseURL:"https://indipl2020.herokuapp.com/",
-  ipldetails:"https://indipl2020.herokuapp.com/ipl2020/team/"
+  baseURL: 'https://indipl2020.herokuapp.com/',
+  ipldetails: 'https://indipl2020.herokuapp.com/ipl2020/team/'
 };
 
 /*

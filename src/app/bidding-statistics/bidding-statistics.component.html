@@ -4,9 +4,9 @@
 
 <div class="container">
     <div class="row mt-5">
-        <div class="col-md-6 col-12">
+        <div class="col-md-6 col-12 px-2 d-none d-sm-none d-md-block d-lg-block">
             <div *ngFor="let data of playerdetails">
-                <h2 class="text-primary">Maximum Paid {{data["role"]}}</h2>
+                <h3 class="text-primary mb-0">Maximum Paid {{data["role"]}}</h3>
                 <table class="table mat-elevation-z8 bg-white">
                     <thead>
                         <tr>
@@ -28,9 +28,33 @@
                 </table>
             </div>
         </div>
+        <div class="col-md-6 d-md-none d-lg-none d-block d-sm-block">
+            <div *ngFor="let data of playerdetails">
+                <h3 class="text-primary mb-0">Maximum Paid {{data["role"]}}</h3>
+                <table class="table mat-elevation-z8 bg-white">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Role</th>
+
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let player of data['players'];let i=index;">
+
+                            <td>{{player.name}}</td>
+                            <td>{{player.role}}</td>
+
+                            <td>{{player.price|currency:"INR"}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
         <div class="col-md-6 d-none d-md-block d-lg-block d-sm-none">
-            <h2 class="text-primary">Player Details Sorted By Price</h2>
+            <h3 class="text-primary mb-0">Player Details Sorted By Price</h3>
             <table mat-table [dataSource]="datasource" matSort class="mat-elevation-z8">
                 <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef>Player Name</th>
@@ -56,34 +80,34 @@
 
             <mat-paginator #scheduledOrdersPaginator [pageSizeOptions]="[10,15,20,25]" showFirstLastButtons class="col-md-12"></mat-paginator>
         </div>
-        <div class="row d-md-none d-lg-none d-block d-sm-block mt-2 ">
-            <div class="col-12">
-                <mat-accordion displayMode="flat" multi mat-table>
-                    <section matSort class="mat-elevation-z2 mat-header-row table-header">
-                        <div class="row col-12">
-                            <div class="col-3 pl-4 "><b>Player Name</b></div>
-                            <div class="col-4 pl-4"><b>Role</b></div>
-                            <div class="col-5"><b>Label</b></div>
-                        </div>
-                    </section>
 
-                    <mat-expansion-panel *ngFor="let item of datasource['filteredData']| slice: lowValue : highValue;">
-                        <mat-expansion-panel-header class="col-12 table-data h-100 my-1 ">
-                            <div class="row col-12">
-                                <div class="col-3">{{item.name}}</div>
-                                <div class="col-4"> {{ item.role }}</div>
-                                <div class="col-5 pl-4">{{ item.label}}</div>
-                            </div>
-                        </mat-expansion-panel-header>
-                        <div class="expand-data row my-1 ">
-                            <div class="col-6"><b>Price</b></div>
-                            <div class="col-6 "> <b>:</b>&nbsp; {{item.price}} </div>
+        <div class="col-12 d-md-none d-lg-none d-block d-sm-block mt-2">
+            <mat-accordion displayMode="flat" multi mat-table>
+                <section matSort class="mat-elevation-z2 mat-header-row table-header">
+                    <div class="row col-12">
+                        <div class="col-3 pl-4 "><b>Player Name</b></div>
+                        <div class="col-4 pl-4"><b>Role</b></div>
+                        <div class="col-5"><b>Label</b></div>
+                    </div>
+                </section>
+
+                <mat-expansion-panel *ngFor="let item of datasource['filteredData']| slice: lowValue : highValue;">
+                    <mat-expansion-panel-header class="col-12 table-data h-100 my-1 ">
+                        <div class="row col-12">
+                            <div class="col-3 px-0">{{item.name}}</div>
+                            <div class="col-4"> {{ item.role }}</div>
+                            <div class="col-5 pl-4">{{ item.label}}</div>
                         </div>
-                    </mat-expansion-panel>
-                </mat-accordion>
-                <mat-paginator [length]="datasource['filteredData'].length" [pageSizeOptions]="[5, 10, 20]" pageSize=5 (page)="getPaginatorData($event)" showFirstLastButtons="false">
-                </mat-paginator>
-            </div>
+                    </mat-expansion-panel-header>
+                    <div class="expand-data row my-1 ">
+                        <div class="col-6"><b>Price</b></div>
+                        <div class="col-6 "> <b>:</b>&nbsp; {{item.price}} </div>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+            <mat-paginator [length]="datasource['filteredData'].length" [pageSizeOptions]="[5, 10, 20]" pageSize=5 (page)="getPaginatorData($event)" showFirstLastButtons="false">
+            </mat-paginator>
         </div>
+
     </div>
 </div>

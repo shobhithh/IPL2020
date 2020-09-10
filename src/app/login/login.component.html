@@ -1,36 +1,36 @@
 <div class="login">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-5 offset-md-3 mt-5">
+                <form class="jumbotron mt-5" [formGroup]="loginform">
 
-    <div class="row col-md-12">
-        <div class="col-md-5 offset-md-3 mt-5">
-            <form class="jumbotron mt-5" [formGroup]="loginform">
+                    <h1 class="text-center text-primary">Login</h1>
+                    <div class="form-group">
+                        <mat-form-field class="full-width-input">
+                            <input class="email" matInput placeholder="Email" class="email" formControlName="username">
+                            <mat-error *ngIf="username.errors?.required&&username.touched">
+                                Please Provide a Email
+                            </mat-error>
+                            <mat-error *ngIf="hasError('username', 'pattern')">Plase Provide a valid email Id</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="form-group">
 
-                <h1 class="text-center text-primary">Login</h1>
-                <div class="form-group">
-                    <mat-form-field class="full-width-input">
-                        <input class="email" matInput placeholder="Email" class="email" formControlName="username">
-                        <mat-error *ngIf="username.errors?.required&&username.touched">
-                            Please Provide a Email
-                        </mat-error>
-                        <mat-error *ngIf="hasError('username', 'pattern')">Plase Provide a valid email Id</mat-error>
-                    </mat-form-field>
-                </div>
-                <div class="form-group">
+                        <mat-form-field class="full-width-input">
+                            <input matInput type="password" class="password" placeholder="Password" formControlName="password">
+                            <mat-error *ngIf="password.errors?.required&&password.touched">
+                                Please provide a password
+                            </mat-error>
+                            <mat-error *ngIf="hasError('password', 'minlength')">You must have minimum 5 characters</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="form-group text-center">
+                        <button class="btn btn-primary btn-lg" [disabled]="loginform.invalid" (click)="confirmcredentials()">Login</button>
+                    </div>
+                    <div class="text-danger" *ngIf="!isAuthenticate">{{errormessage}}</div>
 
-                    <mat-form-field class="full-width-input">
-                        <input matInput type="password" class="password" placeholder="Password" formControlName="password">
-                        <mat-error *ngIf="password.errors?.required&&password.touched">
-                            Please provide a password
-                        </mat-error>
-                        <mat-error *ngIf="hasError('password', 'minlength')">You must have minimum 5 characters</mat-error>
-                    </mat-form-field>
-                </div>
-                <div class="form-group text-center">
-                    <button class="btn btn-primary btn-lg" [disabled]="loginform.invalid" (click)="confirmcredentials()">Login</button>
-                </div>
-                <!-- {{errormessage}}
-                <div class="text-danger" *ngIf="errormessage&&loginform.valid">Invalid Credentials</div> -->
-
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 </div>

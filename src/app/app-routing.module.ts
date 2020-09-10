@@ -10,26 +10,26 @@ import { AuthGuardGuard } from './auth-guard/auth-guard.guard';
 
 const routes: Routes = [
   {
-    path:'',
-    component:LoginComponent
+    path : '',
+    component: LoginComponent
   },
-  // {
-  // path:'home',
-  // component:HomeComponent,
-  // canActivate: [AuthGuardGuard]
-  // },
   {
-    path:'playerstat',
-    component:PlayerStatisticsComponent,
+    path: 'home',
+    component: HomeComponent,
     canActivate: [AuthGuardGuard]
   },
   {
-    path:'teamstat',
-    component:TeamStatisticsComponent
+    path: 'playerstat',
+    component: PlayerStatisticsComponent,
+    canActivate: [AuthGuardGuard]
   },
   {
-    path:'biddingstat',
-    component:BiddingStatisticsComponent
+    path: 'teamstat',
+    component: TeamStatisticsComponent
+  },
+  {
+    path: 'biddingstat',
+    component: BiddingStatisticsComponent
   }
 ];
 
