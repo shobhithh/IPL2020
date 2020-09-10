@@ -50,7 +50,3 @@ mat-form-field {
 ::ng-deep .mat-form-field-underline {
     border: none;
 }
-
-body {
-    background-color: blueviolet;
-}

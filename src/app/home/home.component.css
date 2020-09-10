@@ -1,0 +1,19 @@
+body {
+    height: 100% !important;
+    width: 100% !important;
+    overflow: hidden;
+}
+
+.carousel-caption {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+#carousel {
+    height: 100% !important;
+    width: 100% !important;
+}
+
+img {
+    width: 100% !important;
+    height: 100% !important;
+}

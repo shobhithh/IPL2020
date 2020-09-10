@@ -32,3 +32,14 @@ export interface RoleCountDTO{
     count:number;
     roleName:string;
 }
+
+export interface MaxAmountPlayerByRoleDTO{
+    amount:string;
+    players:{
+        label:string;
+        name:string;
+        price:string;
+        role:string
+    },
+    role:string
+}

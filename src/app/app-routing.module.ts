@@ -5,6 +5,7 @@ import { TeamStatisticsComponent } from './team-statistics/team-statistics.compo
 import { BiddingStatisticsComponent } from './bidding-statistics/bidding-statistics.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { AuthGuardGuard } from './auth-guard/auth-guard.guard';
 
 
 const routes: Routes = [
@@ -12,13 +13,15 @@ const routes: Routes = [
     path:'',
     component:LoginComponent
   },
-  {
-  path:'home',
-  component:HomeComponent
-  },
+  // {
+  // path:'home',
+  // component:HomeComponent,
+  // canActivate: [AuthGuardGuard]
+  // },
   {
     path:'playerstat',
     component:PlayerStatisticsComponent,
+    canActivate: [AuthGuardGuard]
   },
   {
     path:'teamstat',

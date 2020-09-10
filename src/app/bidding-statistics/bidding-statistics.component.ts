@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { IplplayerdetailsService } from '../service/iplplayerdetails.service';
 import { amountByRolename } from '../shared/labels.model';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 
 @Component({
@@ -14,6 +14,8 @@ export class BiddingStatisticsComponent implements OnInit {
   playerdetails: amountByRolename[] = []
   allplayers: amountByRolename[] = []
   teamMembersColumns = ["name", "role", "label", "price"]
+  lowValue = 0;
+  highValue = 5;
   datasource = new MatTableDataSource<amountByRolename>();
   @ViewChild('scheduledOrdersPaginator') paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -35,4 +37,11 @@ export class BiddingStatisticsComponent implements OnInit {
     })
   }
 
+  public getPaginatorData(event: PageEvent): PageEvent {
+
+    
+    this.lowValue = event.pageIndex * event.pageSize;
+    this.highValue = this.lowValue + event.pageSize;
+    return event;
+  }
 }

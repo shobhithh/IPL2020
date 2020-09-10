@@ -1,16 +1,17 @@
-<app-header></app-header>
+<app-header>
+</app-header>
 <div class="container">
     <div class="row mt-5">
-        <div class="col-md-6">
-            <div *ngIf="tableChart">
+        <div class="col-md-6 col-12 col-lg-6">
+            <div *ngIf="tableChart" class="table">
                 <google-chart [data]="tableChart"></google-chart>
             </div>
         </div>
-        <div class="col-md-6">
-            <div *ngIf="columnChart">
+        <div class="col-md-6 col-12 col-lg-6">
+            <div *ngIf="columnChart" class="columnchart">
                 <google-chart [data]="columnChart" (chartSelect)="onSelectChart($event)"></google-chart>
             </div>
-            <div *ngIf="pieChart">
+            <div *ngIf="pieChart&&show_table_chart" class="piechart mt-3">
                 <google-chart [data]="pieChart"></google-chart>
             </div>
         </div>

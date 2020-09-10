@@ -24,7 +24,8 @@ export class LoginComponent implements OnInit {
   logindata: string
   token: string;
   userdata: string
-  errormessage: string
+  errormessage: boolean=true
+  tokendata:string
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
 
   }
@@ -32,9 +33,12 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginform = this.fb.group({
-      username: ['', [Validators.required]],
-      password: ['', [Validators.required]]
+      username: ['', [Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
+      password: ['', [Validators.required,Validators.minLength(5)]]
     })
+  }
+  public hasError = (controlName: string, errorName: string) =>{
+    return this.loginform.controls[controlName].hasError(errorName);
   }
   get username() {
     return this.loginform.get('username');
@@ -51,12 +55,16 @@ export class LoginComponent implements OnInit {
     this.authService.getAuthenticated(this.loginform.value.username,this.loginform.value.password).subscribe(data =>
       {
         console.log(data)
+        this.tokendata=data["token"]
         if(data)
         {
-          this.router.navigate(['/home']); 
+          this.router.navigate(['/playerstat']); 
+          // this.errormessage=false
+          
         }
         else{
           this.router.navigate(['/'])
+          // this.errormessage=true
         }
       }
     

@@ -21,6 +21,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { Ng2GoogleChartsModule } from 'ng2-google-charts';
+import { MatExpansionModule } from '@angular/material/expansion';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +42,8 @@ import { Ng2GoogleChartsModule } from 'ng2-google-charts';
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    Ng2GoogleChartsModule
+    Ng2GoogleChartsModule,
+    MatExpansionModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }],

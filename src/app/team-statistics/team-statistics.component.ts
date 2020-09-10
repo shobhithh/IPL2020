@@ -15,6 +15,7 @@ export class TeamStatisticsComponent implements OnInit {
   tableChart: GoogleChartInterface;
   columnChart: GoogleChartInterface;
   pieChart: GoogleChartInterface;
+  show_table_chart:boolean=true
   constructor(private iplservice: IplplayerdetailsService) { }
 
   ngOnInit(): void {
@@ -53,7 +54,8 @@ this.teamAmount=result
           options: {
             title: 'Teams',
             width: 600,
-            height: 400
+            height: 300,
+          
           }
   
         }
@@ -66,7 +68,7 @@ this.teamAmount=result
   onSelectChart(event){
     let team = event.selectedRowFormattedValues[0];
     console.log(team)
-    
+    this.show_table_chart=false
     this.iplservice.getROleCountByTeam(team).subscribe(result=>
       {
         this.roleCountByTeam=result
@@ -78,7 +80,7 @@ this.teamAmount=result
         {
           data.push([team["roleName"],team["count"]])
         }
-         
+        this.show_table_chart=true
          this.pieChart = {
           chartType: "PieChart",
           dataTable: data,
@@ -86,12 +88,13 @@ this.teamAmount=result
             title: team,
             
             width: 500,
-            height: 400
+            height: 400,
+        
           }
           
           
         }
-        
+
       })
   }
 
