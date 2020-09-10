@@ -16,10 +16,10 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     $('.navbar-collapse .nav-link').click(function () {
       $(this).siblings().removeClass('active');
-      // $(this).parent().removeclass('active')
       $(this).addClass('active');
     }
     );
+   
   }
 
   logout() {

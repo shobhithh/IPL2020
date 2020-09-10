@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 // import { LoginserviceService } from '../Services/loginservice.service';
-import { tokenName } from '@angular/compiler';
-import { TokenError } from '@angular/compiler/src/ml_parser/lexer';
+
 // import { Router } from '@angular/router';
 // import { AuthService } from '../auth-guard/auth.service';
 import { Router } from '@angular/router';
@@ -23,8 +22,9 @@ export class LoginComponent implements OnInit {
   token: string;
   userdata: string;
   errormessage: string;
-  isAuthenticate = true;
+  isAuthenticate = false;
   tokendata: string;
+  isclicked=false
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
 
   }
@@ -50,18 +50,22 @@ export class LoginComponent implements OnInit {
 
 
   confirmcredentials() {
-
+   
+    setTimeout(() => {
+    this.isclicked=true
+    },2000);
     this.authService.getAuthenticated(this.loginform.value.username, this.loginform.value.password).subscribe(data => {
-     
-      this.tokendata = data['token'];
-      if (data) {
+      if (data["status"]!='401') {
         this.router.navigate(['/playerstat']);
         this.isAuthenticate = true;
+        this.isclicked=false
       }
       else {
+     
         this.router.navigate(['/']);
-        this.errormessage = 'Invalid Credentials';
+        // this.errormessage = 'Invalid Credentials';
         this.isAuthenticate = false;
+        this.isclicked=true
       }
     }
 

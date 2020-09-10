@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { tap, catchError, mapTo,} from 'rxjs/operators';
 import { JwtRequest } from '../shared/credentials.model';
 
 
@@ -17,7 +17,10 @@ export class AuthService {
   getAuthenticated(username, password): Observable<JwtRequest> {
     const url = `${this.baseUrl}authenticate`;
     return this.http.post<JwtRequest>(url, { username: username, password: password }, { headers: { skip: 'true' } }).pipe(
-      tap(token => this.storetoken(token)));
+      tap(token => this.storetoken(token)),
+      catchError(err=>{
+        return of(err);
+      }));
 
   }
 

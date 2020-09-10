@@ -42,6 +42,7 @@ export class PlayerStatisticsComponent implements OnInit {
   }
 
   TeamDetails() {
+   
     this.showtablechart = false;
     this.iplservice.getPlayerDetails(this.selectedteam).subscribe(result => {
       this.showTableData = true;
@@ -62,7 +63,7 @@ export class PlayerStatisticsComponent implements OnInit {
       for (const s of this.chartdata) {
         data.push([s['roleName'], s['amount']]);
       }
-      console.log(this.screenwidth);
+    
       this.showpiechart = true;
       this.pieChart = {
         chartType: 'PieChart',
@@ -82,7 +83,7 @@ export class PlayerStatisticsComponent implements OnInit {
   selectChart(event) {
     const role = event.selectedRowFormattedValues[0];
     this.showtablechart = false;
-    console.log(event);
+    
     this.iplservice.getPlayerByTeamAndRole(this.selectedteam, role).subscribe(result => {
 
       const playerdetails = result;
@@ -111,7 +112,7 @@ export class PlayerStatisticsComponent implements OnInit {
 
   public getPaginatorData(event: PageEvent): PageEvent {
 
-    console.log('pagination event', event);
+    
     this.lowValue = event.pageIndex * event.pageSize;
     this.highValue = this.lowValue + event.pageSize;
     return event;

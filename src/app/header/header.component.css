@@ -6,7 +6,7 @@
 
 .navbar-collapse .nav-link:hover {
     color: #ee1515;
-    border-bottom: 3px solid red
+    border-bottom: 3px solid red;
 }
 
 .nav-link {
@@ -14,6 +14,6 @@
 }
 
 .navbar-collapse .nav-link.active {
-    /* color: yellow; */
-    border-bottom: 3px solid red
+    color: yellow;
+    border-bottom: 3px solid red;
 }

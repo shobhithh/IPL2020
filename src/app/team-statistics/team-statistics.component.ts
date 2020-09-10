@@ -69,8 +69,9 @@ export class TeamStatisticsComponent implements OnInit {
   }
 
   onSelectChart(event) {
+   
     const team = event.selectedRowFormattedValues[0];
-    console.log(team);
+   
     this.showTableChart = false;
     this.iplservice.getROleCountByTeam(team).subscribe(result => {
       this.roleCountByTeam = result;
@@ -87,7 +88,6 @@ export class TeamStatisticsComponent implements OnInit {
         dataTable: data,
         options: {
           title: team,
-
           width: this.screenWidth,
           height: 350,
         }
